@@ -8,22 +8,32 @@ const styles = {
         listStyle: 'none',
         margin: 0,
         padding: 0
+    },
+    span: {
+        display: 'inline-block',
+        marginBottom: '.5rem'
     }
 };
 
 function ToDoList (props) {
     return (
-        <ul style={styles.ul}>
-            { props.todos.map((todo, i) => {
-                return <ToDoItem 
-                            todo={todo}
-                            key={todo.id}
-                            index={i}
-                            onChange={props.onToggle}
-                            deleteTodo={props.deleteTodo}
-                        />
-            }) }
-        </ul>
+        <div>
+            {
+                props.todos.length
+                ? <ul style={styles.ul}>
+                    { props.todos.map((todo, i) => {
+                        return <ToDoItem 
+                                    todo={todo}
+                                    key={todo.id}
+                                    index={i}
+                                    onChange={props.onToggle}
+                                    deleteTodo={props.deleteTodo}
+                                />
+                    }) }
+                </ul>
+                : <span style={styles.span}>You doesn't have todo yet.</span>
+            }
+        </div>
     );
 }
 
