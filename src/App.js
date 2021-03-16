@@ -1,23 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import CreateItem from './ToDo/CreateItem';
+import ToDoList from './ToDo/ToDoList';
 
 function App() {
+  const [todos, setTodos] = React.useState([
+    {
+      id: 1, completed: false, title: 'Test task'
+    },
+    {
+      id: 2, completed: false, title: 'Test task 2'
+    },
+    {
+      id: 3, completed: false, title: 'Test task 3'
+    }
+  ])
+
+  const toggleTodo = (id) => {
+    setTodos(todos.map(todo => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed;
+      }
+
+      return todo;
+    }))
+  };
+
+  const deleteTodo = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id))
+  };
+
+  const addNewTodo = (title) => {
+    setTodos([...todos, { id: new Date().getTime(), completed: false, title }])
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wrapper">
+      <h1>React</h1>
+      <ToDoList todos={todos} onToggle={toggleTodo} deleteTodo={deleteTodo} />
+      <CreateItem addNewItem={addNewTodo} />
     </div>
   );
 }
